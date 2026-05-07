@@ -1,5 +1,6 @@
 class Solution:
     def isValid(self, s: str) -> bool:
+        # O(n) time and space complexity
         stack = []
         closeToOpen = {")":"(", "]":"[", "}":"{"}
         for char in s:
