@@ -14,7 +14,7 @@ class Solution:
         return max_profit
 
         # --------------- FIRST IMPLEMENTATION ---------------
-        # # sliding window problem, use 2 ptrs
+        # use 2 ptrs
         # maxProfit = 0
         # l, r  = 0,1 #left is buy, right is sell
         # # keep running the loop, until we reach the last value with r
