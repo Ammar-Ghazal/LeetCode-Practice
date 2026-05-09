@@ -5,26 +5,32 @@
 #         self.next = next
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        # O(n+m) time complexity (list1 is n, list2 is m), and O(1) space complexity (only creating headptr and curr)
-        headptr = ListNode()
-        curr = headptr
+        # Time complexity: O(n)
+        # Space complexity: O(1)
 
-        # while both lists are not empty:
+        # Initialize LL we want to return, and a cur ptr to keep track of current location
+        head = ListNode()
+        cur = head
+
+        # while both lists are non empty:
         while list1 and list2:
-            if list1.val <= list2.val:
-                curr.next = list1
+            # if list1's value is smaller, put it in merged list
+            if list1.val < list2.val:
+                cur.next = list1
                 list1 = list1.next
+            # if list2's value is bigger/equal, put it in merged list
             else:
-                curr.next = list2
+                cur.next = list2
                 list2 = list2.next
-            # be sure to look at the node we just entered in curr.next (list1/list2)
-            curr = curr.next
 
-        # if either list becomes empty, then set the rest of the list to be the non empty one
-        if list1:
-            curr.next = list1
-        elif list2:
-            curr.next = list2
+            # update current pointer so we dont overwrite what we entered in the next iteration
+            cur = cur.next
         
-        return headptr.next
+        # plug in the rest of the list once the other list runs out
+        if list1:
+            cur.next = list1
+        elif list2:
+            cur.next = list2
+        
+        return head.next
 
