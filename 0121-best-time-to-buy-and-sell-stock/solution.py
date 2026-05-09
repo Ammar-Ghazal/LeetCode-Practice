@@ -1,29 +1,30 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        # Time complexity: O(n)
-        # Space complexity: O(1)
-        
-        # --------------- CLEANER IMPLEMENTATION ---------------
-        min_price = prices[0]
-        max_profit = 0
-        
-        for price in prices:
-            min_price = min(min_price, price)
-            max_profit = max(max_profit, price - min_price)
-        
-        return max_profit
+        # ------------- Cleaner Implementation --------
+        # Time Complexity: O(n)
+        # Space Complexity: O(1)
+        maxProfit = 0
+        lowestBuyPrice = prices[0]
 
-        # --------------- FIRST IMPLEMENTATION ---------------
-        # use 2 ptrs
+        for p in prices:
+            lowestBuyPrice = min(p, lowestBuyPrice)
+            maxProfit = max(p-lowestBuyPrice, maxProfit)
+        
+        return maxProfit
+
+        # ------------- Implementation #1 -------------
+        # Time Complexity: O(n)
+        # Space Complexity: O(1)
         # maxProfit = 0
-        # l, r  = 0,1 #left is buy, right is sell
-        # # keep running the loop, until we reach the last value with r
+        # l,r = 0,0
+
         # while r < len(prices):
         #     if prices[l] < prices[r]:
-        #         profit = prices[r] - prices[l]
+        #         profit = prices[r]-prices[l]
         #         maxProfit = max(maxProfit, profit)
-        #     else: #if we find a new low price, set it as the left ptr
-        #         l=r
-        #     # always increment the right ptr
+        #     else:
+        #         l = r
         #     r+=1
+
         # return maxProfit
+
