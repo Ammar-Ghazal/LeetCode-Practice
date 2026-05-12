@@ -1,7 +1,7 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         # Time Complexity: O(s+t)
-        # Space Complexity: O(s+t)
+        # Space Complexity: O(n), up to n unique characters depending on s and t
 
         # pythonic solution:
         return Counter(s) == Counter(t)
