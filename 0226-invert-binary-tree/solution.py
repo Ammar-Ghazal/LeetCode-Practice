@@ -6,20 +6,22 @@
 #         self.right = right
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        # Time Complexity: O(n), n is number of nodes
-        # Space Complexity: O(h) -> number of recursive call stacks needed, O(n) worst case, and O(log(n)) best case
-
-        # base case: dont do or return anything
-        if not root:
-            return None
+        # Time Complexity: O(n) -> worst case in unbalanced tree
+        # Space Complexity: O(h) -> h (height of tree) is n in the worst case, for the recursive call stack
         
-        # swap the two children:
+        # if it is a leaf node, return None/Null
+        if root == None:
+            return
+
+        # swap the two children
         tmp = root.left
         root.left = root.right
         root.right = tmp
 
-        # call the function on the two children
+        # call the invert function on the 2 subtrees
         self.invertTree(root.left)
         self.invertTree(root.right)
 
+        # needed for leetcode grading
         return root
+
