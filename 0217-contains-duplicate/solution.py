@@ -8,11 +8,8 @@ class Solution:
         hashset = set()
         
         for n in nums:
-            # check if the number has been seen before, if yes it has duplicates
             if n in hashset:
                 return True
-            # add the number if it is unique
             hashset.add(n)
 
-        # return false since no duplicates have been found
         return False
