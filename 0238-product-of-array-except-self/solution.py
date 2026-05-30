@@ -1,21 +1,16 @@
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         # Time Complexity: O(n)
-        # Space Complexity: O(1) -> excluding the output array needed for the problem
-
-        # Initialize output array, prefix & postfix values
-        output = [1]*len(nums)
+        # Space Complexity: O(n)
         prefix, postfix = 1, 1
-        # prefix = product of all elements before index i (computed left-to-right)
-        # postfix = product of all elements after index i (computed right-to-left)
-
+        output = [1]*len(nums)
+        
         for i in range(len(nums)):
-            output[i] = prefix # small optimization here, replacing '*= prefix' with '= prefix'
+            output[i] = prefix
             prefix *= nums[i]
-
-        for j in reversed(range(len(nums))):
+        
+        for j in range(len(nums) - 1, -1, -1):
             output[j] *= postfix
             postfix *= nums[j]
 
         return output
-
