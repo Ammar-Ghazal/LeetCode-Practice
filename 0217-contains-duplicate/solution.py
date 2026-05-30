@@ -2,14 +2,10 @@ class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
         # Time Complexity: O(n)
         # Space Complexity: O(n)
-
-        # initialize hashset, fast lookup and enforces uniqueness
-        # why not use dict? to avoid having to store useless values: {1:true}, for example
-        hashset = set()
-        
+        pastNums = set()
         for n in nums:
-            if n in hashset:
+            if n in pastNums:
                 return True
-            hashset.add(n)
-
+            pastNums.add(n)
         return False
+
