@@ -2,8 +2,7 @@ class Solution:
     def threeSum(self, nums: list[int]) -> list[list[int]]:
         # Time Complexity: O(n^2)
         # Space Complexity: O(1) -> not counting the allTriplets output
-        allTriplets = []
-        # sort the nums array so we can plug in 2sum II (version 2) code
+        output = []
         nums.sort()
 
         # loop for first integer out of the 3 (i, l, r)
@@ -24,10 +23,10 @@ class Solution:
                 elif threeSum > 0:
                     r -= 1
                 else:
-                    # sum is equal to 0, add it to the allTriplets list, and update left ptr (doesnt matter which one we update)
-                    allTriplets.append([nums[i], nums[l], nums[r]])
+                    # sum is equal to 0, add it to the output list, and update left ptr (doesnt matter which one we update)
+                    output.append([nums[i], nums[l], nums[r]])
                     l += 1
                     # if the next number is the same, keep updating the left ptr (to avoid duplicates)
                     while nums[l] == nums[l-1] and l<r:
                         l += 1
-        return allTriplets
+        return output
