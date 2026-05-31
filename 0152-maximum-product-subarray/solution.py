@@ -2,23 +2,15 @@ class Solution:
     def maxProduct(self, nums: List[int]) -> int:
         # Time Complexity: O(n)
         # Space Complexity: O(1)
-        maxProd = nums[0]
-        curProd = 1
+        maxProd, forProd, backProd = nums[0], 1, 1
+        length = len(nums)
 
-        # no idea how this works or what I did, i just drooled on my keyboard and it passed
-        # goodluck to future me who has to write the comments
+        for i in range(length):
+            forProd *= nums[i]
+            backProd *= nums[length - i - 1]
+            maxProd = max(maxProd, max(forProd, backProd))
 
-        for i in range(len(nums)):
-            if curProd == 0:
-                curProd = 1
-            curProd *= nums[i]
-            maxProd = max(curProd, maxProd)
-        
-        curProd = 1
-        for j in reversed(range(len(nums))):
-            if curProd == 0:
-                curProd = 1
-            curProd *= nums[j]
-            maxProd = max(curProd, maxProd)
+            if forProd == 0: forProd = 1
+            if backProd == 0: backProd = 1
 
         return maxProd
