@@ -8,27 +8,24 @@ class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         # Time Complexity: O(n)
         # Space Complexity: O(1)
-        curr = fast = head
+        fast = slow = head
 
-        while fast != None and fast.next != None and fast.next.next != None:
-            fast = fast.next.next.next
-            curr = curr.next
-            if curr == fast:
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if fast == slow:
                 return True
-        
+            
         return False
 
-
-        # Initial Implementation:
+        # Initial Impelementation
         # Time Complexity: O(n)
         # Space Complexity: O(n)
         # visited = set()
-        # curr = head
-
-        # while curr:
-        #     if curr in visited:
+        # while head:
+        #     if head in visited:
         #         return True
-        #     visited.add(curr)
-        #     curr = curr.next
+        #     visited.add(head)
+        #     head = head.next
         
         # return False
