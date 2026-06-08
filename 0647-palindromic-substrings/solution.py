@@ -1,12 +1,19 @@
 class Solution:
     def countSubstrings(self, s: str) -> int:
-        # Time Complexity: O(n^3), because the reversing of the string takes O(n) time
-        # Space Complexity: O(n), for storing each of the substrings s[i:j] and their reverses s[i:j][::-1]
-        output = 0
-        for i in range(len(s)):
-            for j in range(i + 1, len(s) + 1):
-                # unique substrings are s[i:j]
-                if s[i:j] == s[i:j][::-1]:
-                    output += 1
+        # Time Complexity: O(n^2)
+        # Space Complexity: O(1)
+
+        def paliCounter(s: str, l: int, r: int ) -> int:
+            count = 0
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                count += 1
+                l -= 1
+                r += 1
+            return count
         
-        return output
+        count = 0
+        for i in range(len(s)):
+            count += paliCounter(s, i, i)
+            count += paliCounter(s, i, i + 1)
+        
+        return count
