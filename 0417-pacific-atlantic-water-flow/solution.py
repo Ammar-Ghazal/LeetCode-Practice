@@ -1,39 +1,29 @@
+from collections import deque
+
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        # Time Complexity: O(n*m)
-        # Space Complexity: O(n*m)
         ROWS, COLS = len(heights), len(heights[0])
-        pac, atl = set(), set() # sets for pacific and atlantic oceans to keep track, and to avoid duplicates
+        pac, atl = set(), set()
 
-        def dfs(r, c, visit, prevHeight):
-            if ((r, c) in visit or 
-                r < 0 or c < 0 or r == ROWS or c == COLS or
-                heights[r][c] < prevHeight):
-                    return
-            visit.add((r, c))
-            dfs(r + 1, c, visit, heights[r][c])
-            dfs(r - 1, c, visit, heights[r][c])
-            dfs(r, c + 1, visit, heights[r][c])
-            dfs(r, c - 1, visit, heights[r][c])
+        def bfs(starts, visit):
+            q = deque(starts)
+            for cell in starts:
+                visit.add(cell)
+            while q:
+                r, c = q.popleft()
+                for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+                    nr, nc = r + dr, c + dc
+                    if (0 <= nr < ROWS and 0 <= nc < COLS
+                            and (nr, nc) not in visit
+                            and heights[nr][nc] >= heights[r][c]):
+                        visit.add((nr, nc))
+                        q.append((nr, nc))
 
-        for c in range(COLS):
-            # run dfs on first row cells = 0, pacific ocean rows
-            dfs(0, c, pac, heights[0][c])
+        pacStarts = [(0, c) for c in range(COLS)] + [(r, 0) for r in range(ROWS)]
+        atlStarts = [(ROWS - 1, c) for c in range(COLS)] + [(r, COLS - 1) for r in range(ROWS)]
 
-            # run dfs on last row, atlantic ocean
-            dfs(ROWS - 1, c, atl, heights[ROWS - 1][c])
-        
-        for r in range(ROWS):
-            # run dfs on first col cells, pacific oean
-            dfs(r, 0, pac, heights[r][0])
-            
-            # run dfs on last col cels, atlantic ocean
-            dfs(r, COLS - 1, atl, heights[r][COLS - 1])
+        bfs(pacStarts, pac)
+        bfs(atlStarts, atl)
 
-        result = []
-        for r in range(ROWS):
-            for c in range(COLS):
-                if (r, c) in pac and (r, c) in atl:
-                    result.append([r, c])
-
-        return result
+        return [[r, c] for r in range(ROWS) for c in range(COLS)
+                if (r, c) in pac and (r, c) in atl]
