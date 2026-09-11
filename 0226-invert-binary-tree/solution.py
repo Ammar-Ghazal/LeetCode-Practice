@@ -6,14 +6,15 @@
 #         self.right = right
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        # Time Complexity: O(n)
+        # Space Complexity: O(h), where h is tree height; O(n) worst case
         if root == None:
             return root
-
-        tempVar = root.left
-        root.left = root.right
-        root.right = tempVar
-
+        
         self.invertTree(root.left)
         self.invertTree(root.right)
+        tmp = root.left
+        root.left = root.right
+        root.right = tmp
 
         return root
