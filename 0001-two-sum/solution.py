@@ -1,7 +1,11 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        # time complexity: O(n^2)
+        # time complexity: O(n)
+        # space complexity: O(n)
+        prev = {}
         for i in range(len(nums)):
-            for j in range(len(nums)):
-                if i != j and nums[i]+nums[j] == target:
-                    return [i, j]
+            diff = target - nums[i]
+            if diff in prev:
+                return [prev[diff], i]
+            prev[nums[i]] = i
+
