@@ -6,26 +6,13 @@
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        # Time Complexity: O(n)
-        # Space Complexity: O(1)
-        fast = slow = head
+        curr = head
+        fast = head
 
-        while fast and fast.next:
-            slow = slow.next
+        while fast and fast.next and fast.next.next:
+            curr = curr.next
             fast = fast.next.next
-            if fast == slow:
-                return True
-            
+            if curr == fast: return True
+
         return False
 
-        # Initial Impelementation
-        # Time Complexity: O(n)
-        # Space Complexity: O(n)
-        # visited = set()
-        # while head:
-        #     if head in visited:
-        #         return True
-        #     visited.add(head)
-        #     head = head.next
-        
-        # return False
