@@ -1,17 +1,13 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        # Time Complexity: O(n) or O(s+t), but s==t since we return false otherwise
-        # Space Complexity: O(n) or O(s+t)
+        # return Counter(s) == Counter(t)
+        sCount, tCount = {}, {}
 
         if len(s) != len(t): return False
-        countS, countT = {}, {}
 
         for i in range(len(s)):
-            countS[s[i]] = countS.get(s[i], 0) + 1
-            countT[t[i]] = countT.get(t[i], 0) + 1
-
-        for char in countS:
-            if countS[char] != countT.get(char, 0):
-                return False
+            sCount[s[i]] = sCount.get(s[i], 0) + 1
+            tCount[t[i]] = tCount.get(t[i], 0) + 1
         
-        return True
+        # print(sCount, tCount)
+        return sCount == tCount  
