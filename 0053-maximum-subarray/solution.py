@@ -2,13 +2,15 @@ class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
         # Time Complexity: O(n)
         # Space Complexity: O(1)
-        curSum = 0
-        maxSum = nums[0]
-        
-        for n in nums:
+        maxSum, curSum = nums[0], 0
+
+        for num in nums:
+            curSum += num
+
+            if curSum > maxSum:
+                maxSum = curSum
+            
             if curSum < 0:
                 curSum = 0
-            curSum += n
-            maxSum = max(curSum, maxSum)
-
+            
         return maxSum
