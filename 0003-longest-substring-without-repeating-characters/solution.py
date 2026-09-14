@@ -1,31 +1,15 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        # Time Complexity: O(n)
-        # Space Complexity: O(1)
+        # Time complexity: O(n) n is the length of the string inputted
+        # Space complexity: O(m) m is the length of the alphabet used
+        maxSub, l = 0, 0
+        strLen = len(s)
         visited = set()
-        l, maxSub = 0, 0
-
-        for r in range(len(s)):
-            while s[r] in visited:
+        
+        for char in s:
+            while char in visited:
                 visited.remove(s[l])
                 l += 1
-            maxSub = max(r - l + 1, maxSub)
-            visited.add(s[r])
-        
+            visited.add(char)
+            maxSub = max(maxSub, len(visited))
         return maxSub
-
-
-        # # Second Implementation
-        # # Time Complexity: O(n)
-        # # Space Complexity: O(1)
-        # count = {}
-        # l, maxSub = 0, 0
-
-        # for r in range(len(s)):
-        #     count[s[r]] = 1 + count.get(s[r], 0)
-        #     while count[s[r]] > 1:
-        #         count[s[l]] -= 1
-        #         l += 1
-        #     maxSub = max(r-l+1, maxSub)
-    
-        # return maxSub
