@@ -6,14 +6,14 @@
 #         self.right = right
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        def isValid(node, left, right):
-            # Time Complexity: O(n), each node is visited once
-            # Space Complexity: O(h), for recursion stack, where h is the height of the tree
-            # best case, this is O(log(n)) for balanced tree, worst case is O(n), a linked list
-            if not node:
+        # Time complexity: O(n)
+        # Space complexity: O(h) -> height for number of recursive calls, log(n) best case, n worst case
+        def dfs(node, left, right):
+            if node is None:
                 return True
-            elif not (node.val > left and node.val < right):
+            elif (node.val <= left) or (node.val >= right):
                 return False
-            return (isValid(node.left, left, node.val) and isValid(node.right, node.val, right))
-        
-        return isValid(root, float("-inf"), float("inf"))
+            return dfs(node.left, left, node.val) and dfs(node.right, node.val, right)
+
+
+        return dfs(root, float('-inf'), float('inf'))
