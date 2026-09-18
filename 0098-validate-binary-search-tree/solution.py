@@ -11,9 +11,8 @@ class Solution:
         def dfs(node, left, right):
             if node is None:
                 return True
-            elif (node.val <= left) or (node.val >= right):
+            elif (node.val >= right) or (node.val <= left):
                 return False
             return dfs(node.left, left, node.val) and dfs(node.right, node.val, right)
-
-
+        
         return dfs(root, float('-inf'), float('inf'))
