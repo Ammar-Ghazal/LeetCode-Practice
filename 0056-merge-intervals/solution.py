@@ -1,19 +1,12 @@
 class Solution:
-    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        # Time Complexity: O(nlog(n)) -> from sorting
-        # Space Complexity: O(n)
-        intervals.sort()
-        output = []
-        start, end = intervals[0][0], intervals[0][1]
-        for i in range(len(intervals)-1):
-            if end < intervals[i+1][0]:
-                output.append([start, end])
-                start = intervals[i+1][0]
-                end = intervals[i+1][1]
-            else:
-                if end < intervals[i+1][1]:
-                    end = intervals[i+1][1]
+    def merge(self, intervals: list[list[int]]) -> list[list[int]]:
+        out = []
+        intervals.sort(key = lambda x: x[0])
 
-        output.append([start, end])
+        for start, end in intervals:
+            if not out or start > out[-1][1]:
+                out.append([start, end])
+            else:
+                out[-1][1] = max(out[-1][1], end)
         
-        return output
+        return out
