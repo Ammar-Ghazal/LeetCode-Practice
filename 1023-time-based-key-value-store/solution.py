@@ -1,32 +1,29 @@
 class TimeMap:
+
     def __init__(self):
-        self.timemap = {}
+        self.map = defaultdict(list)
 
     def set(self, key: str, value: str, timestamp: int) -> None:
-        if key not in self.timemap:
-            self.timemap[key] = []
-        self.timemap[key].append((value, timestamp))
+        self.map[key].append((value, timestamp))
 
     def get(self, key: str, timestamp: int) -> str:
-        if key not in self.timemap:
-            return ""
-        # Surprise submission failure by lc, must apparently implement binary search :)
-
-        result = ""
-        entries = self.timemap[key] # list of tuples
-        l, r = 0, len(entries) - 1
-        while r >= l:
-            m = (l+r)//2
-            curval, curtime = entries[m]
-
-            if timestamp == curtime:
+        if key not in self.map: return ""
+        curlist = self.map[key]
+        l, r = 0, len(curlist) - 1
+        lastval = ""
+        
+        while l <= r:
+            m = (l + r) // 2
+            curval, curtime = curlist[m]
+            if curtime == timestamp:
                 return curval
-            elif timestamp > curtime:
-                result = curval
+            elif curtime < timestamp:
                 l = m + 1
+                lastval = curval
             else:
                 r = m - 1
-        return result
+        
+        return lastval
 
 # Your TimeMap object will be instantiated and called as such:
 # obj = TimeMap()
