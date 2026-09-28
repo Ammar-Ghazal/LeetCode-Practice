@@ -10,7 +10,9 @@ class Solution:
             for _ in range(col):
                 j += direction
                 output.append(matrix[i][j])
-            row -= 1
+            row -= 1 # be sure to decrement this now, since i = 0, otherwise we go out of bounds
+
+            # move vertically
             for _ in range(row):
                 i += direction
                 output.append(matrix[i][j])
