@@ -1,55 +1,34 @@
 class Solution:
-    def evaluate_expr(self, stack):
-        if not stack or type(stack[-1]) == str:
-            stack.append(0)
-            
-        res = stack.pop()
-
-        # Evaluate the expression till we get corresponding ')'
-        while stack and stack[-1] != ')':
-            sign = stack.pop()
-            if sign == '+':
-                res += stack.pop()
-            else:
-                res -= stack.pop()
-        return res       
-
     def calculate(self, s: str) -> int:
-
+        # Time complexity: O(n)
+        # Space complexity: O(n)
         stack = []
-        n, operand = 0, 0
+        cur = 0
+        total = 0
+        sign = 1 # 1 is positive, -1 is negative
 
-        for i in range(len(s) - 1, -1, -1):
-            ch = s[i]
-
-            if ch.isdigit():
-
-                # Forming the operand - in reverse order.
-                operand = (10**n * int(ch)) + operand
-                n += 1
-
-            elif ch != " ":
-                if n:
-                    # Save the operand on the stack
-                    # As we encounter some non-digit.
-                    stack.append(operand)
-                    n, operand = 0, 0
-
-                if ch == '(':         
-                    res = self.evaluate_expr(stack)
-                    stack.pop()        
-
-                    # Append the evaluated result to the stack.
-                    # This result could be of a sub-expression within the parenthesis.
-                    stack.append(res)
-
-                # For other non-digits just push onto the stack.
-                else:
-                    stack.append(ch)
-
-        # Push the last operand to stack, if any.
-        if n:
-            stack.append(operand)
-
-        # Evaluate any left overs in the stack.
-        return self.evaluate_expr(stack)
+        for char in s:
+            if char.isdigit():
+                cur = (cur)*10 + int(char)
+            elif char == "+":
+                total += sign * cur
+                sign = 1
+                cur = 0 # must be reset for any time char isnt a number
+            elif char == "-":
+                total += sign * cur
+                sign = -1
+                cur = 0
+            elif char == "(":
+                stack.append(total)
+                stack.append(sign)
+                sign = 1
+                total = 0
+            elif char == ")":
+                total += sign * cur
+                total *= stack.pop() # this is the last sign, +1 by default
+                total += stack.pop()
+                cur = 0
+                # sign = 1 # this is apparently redundant since cur is now 0
+                # sign will reset anyways in the next +/-, if not, the cur is 0 so += sign * cur does nothing
+            
+        return total + sign * cur            
