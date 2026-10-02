@@ -5,23 +5,20 @@
 #         self.next = next
 class Solution:
     def mergeKLists(self, lists: list[ListNode | None]) -> ListNode | None:
-        # Time complexity: O(nlogn), n log n b/c sorting requires nlogn
-        # Space complexity: O(n), for the new linked list
-        vals = []
-        curr = temp = ListNode(0)
+        combinedList = [] # where we will combine the linked lists, and sort them
+        out = ListNode(0) # will contain the linked list version of combinedList
 
-        # traverse current linked lists, and add the values to vals
-        for i in range(len(lists)):
-            cur = lists[i]
-            while cur is not None:
-                vals.append(cur.val)
-                cur = cur.next
+        for linkedList in lists:
+            while linkedList:
+                combinedList.append(linkedList.val)
+                linkedList = linkedList.next
         
-        vals.sort() # sorting vals
-        
-        # create new linked list and insert sorted values
-        for num in vals:
-            curr.next = ListNode(num)
-            curr = curr.next
-        
-        return temp.next
+        combinedList.sort()
+
+        temp = out
+        for num in combinedList:
+            temp.next = ListNode(num)
+            temp = temp.next
+
+        # be sure to return the one after the dummy head pointer
+        return out.next        
