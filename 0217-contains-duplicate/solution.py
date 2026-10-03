@@ -1,11 +1,9 @@
 class Solution:
-    def containsDuplicate(self, nums: List[int]) -> bool:
-        # Time Complexity: O(n)
-        # Space Complexity: O(n)
-        pastNums = set()
-        for n in nums:
-            if n in pastNums:
-                return True
-            pastNums.add(n)
+    def containsDuplicate(self, nums: list[int]) -> bool:
+        # Time complexity: O(n)
+        # Space complexity: O(n)
+        visited = set()
+        for num in nums:
+            if num in visited: return True
+            visited.add(num)
         return False
-
