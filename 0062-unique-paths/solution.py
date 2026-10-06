@@ -1,11 +1,11 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        # Time complexity: O(m*n)
-        # Space complexity: O(m*n)
-        d = [[1] * n for _ in range(m)]
-
+        # Time complexity: O(m * n)
+        # Space complexity: O(m * n)
+        dp = [[1] * n for _ in range(m)]
+        
         for row in range(1, m):
             for col in range(1, n):
-                d[row][col] = d[row - 1][col] + d[row][col - 1]
-        
-        return d[m - 1][n - 1]
+                dp[row][col] = dp[row - 1][col] + dp[row][col - 1]
+
+        return dp[m - 1][n - 1]
